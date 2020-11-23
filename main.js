@@ -29,19 +29,23 @@ function getLength(x1, y1, x2, y2) {
     return (rise ** 2 + run ** 2) ** 0.5
 }
 function getSlope(x1,y1,x2,y2) {
+    //special circumstance for undefined slope and 0/0
     if (y1-y2 == 0 && x1-x2 == 0) {
         return "cannot determine"
+    } else if (x1-x2 == 0) {
+        return "undefined"
     } else {
         return (y1-y2)/(x1-x2)
     }
 }
 function getDescription(x1,y1,x2,y2){
+    //slope is 0,0/0, undefined, positive, or negative
     let slope = getSlope(x1,y1,x2,y2)
     if (slope == 0){
         return "horizontal"
     } else if (slope == "cannot determine"){
         return slope
-    } else if (slope == 1/0 || slope == -1/0) {
+    } else if (slope == "undefined") {
         return "vertical"
     } else if (Math.sqrt(slope **2) == slope){
         return "increasing"
@@ -50,13 +54,15 @@ function getDescription(x1,y1,x2,y2){
     }  
 }
 function getPointLocation(x,y){
+    //(x,y)
     return "(" +x + "," + y +")"
 }
 function getEquation(x1,y1,x2,y2){
+    //define variables
     let slope = getSlope(x1,y1,x2,y2)
     let yinter = y1 - x1*slope
     let desc = getDescription(x1,y1,x2,y2)
-    //form equations based on slope conditions
+    //form equations based on slope conditions (dont want a 1 as a coefficient)
     if (slope == 1) {
         return formEquation("",yinter,desc,x1,y1)
     } else if (slope == -1){
@@ -67,12 +73,16 @@ function getEquation(x1,y1,x2,y2){
 
 }
 function formEquation(slope,yinter,desc,x1,y1) {
+    // y is a constant
     if (desc == "horizontal") {
         return "y = " + y1
+    // x is a constant
     } else if (desc == "vertical") {
         return "x = " + x1
+    //equation cannot be determined
     } else if (desc == "cannot determine"){
         return desc
+    // regular equation
     }else {
         if (Math.sqrt(yinter **2) == yinter){
             return "y = " + slope +"x + " + yinter
