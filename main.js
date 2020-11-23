@@ -30,7 +30,7 @@ function getLength(x1, y1, x2, y2) {
 }
 function getSlope(x1,y1,x2,y2) {
     if (y1-y2 == 0 && x1-x2 == 0) {
-        return "missing values"
+        return "cannot determine"
     } else {
         return (y1-y2)/(x1-x2)
     }
@@ -39,7 +39,7 @@ function getDescription(x1,y1,x2,y2){
     let slope = getSlope(x1,y1,x2,y2)
     if (slope == 0){
         return "horizontal"
-    } else if (slope == "missing values"){
+    } else if (slope == "cannot determine"){
         return slope
     } else if (slope == 1/0 || slope == -1/0) {
         return "vertical"
@@ -71,6 +71,8 @@ function formEquation(slope,yinter,desc,x1,y1) {
         return "y = " + y1
     } else if (desc == "vertical") {
         return "x = " + x1
+    } else if (desc == "cannot determine"){
+        return desc
     }else {
         if (Math.sqrt(yinter **2) == yinter){
             return "y = " + slope +"x + " + yinter
