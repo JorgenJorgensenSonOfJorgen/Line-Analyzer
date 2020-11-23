@@ -55,7 +55,41 @@ function getDescription(x1,y1,x2,y2){
 }
 function getPointLocation(x,y){
     //(x,y)
-    return "(" +x + "," + y +")"
+    let coords = "(" +x + "," + y +")" 
+    //x is 0
+    if (x==0) {
+        //both x and y are 0
+        if (y == 0) {
+            return coords  + ", origin"
+        //x is 0 y is not 0
+        } else {
+            return coords  + ", y axis"
+        }
+    // x is not 0
+    } else {
+        // y is 0 x is not 0
+        if (y == 0) {
+            return coords  + ", x axis"
+        //no points are 0
+        } else {
+            // x is positive
+            if (Math.sqrt(x **2) == x) {
+                return determineQ(1,4,y,coords)
+            // x is not positive
+            } else {
+                return determineQ(2,3,y,coords)
+            }
+        }
+    }
+}
+function determineQ(qp1,qp2,y,coords){
+    //y is positive
+    if (Math.sqrt(y **2) == y) {
+        return coords + ", quadrant " + qp1
+    //y is not positive
+    } else {
+        return coords + ", quadrant " + qp2
+    }
 }
 function getEquation(x1,y1,x2,y2){
     //define variables
@@ -84,8 +118,13 @@ function formEquation(slope,yinter,desc,x1,y1) {
         return desc
     // regular equation
     }else {
-        if (Math.sqrt(yinter **2) == yinter){
+        //y inter is 0
+        if ( yinter == 0) {
+            return "y = " + slope +"x"
+        //y inter is pos
+        }else if (Math.sqrt(yinter **2) == yinter){
             return "y = " + slope +"x + " + yinter
+        //y inter is neg
         } else {
             return "y = " + slope +"x - " + Math.sqrt(yinter **2)
         }
