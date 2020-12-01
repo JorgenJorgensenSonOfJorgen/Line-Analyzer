@@ -95,38 +95,32 @@ function getEquation(x1,y1,x2,y2){
     //define variables
     let slope = getSlope(x1,y1,x2,y2)
     let yinter = y1 - x1*slope
-    let desc = getDescription(x1,y1,x2,y2)
-    //form equations based on slope conditions (dont want a 1 as a coefficient)
-    if (slope == 1) {
-        return formEquation("",yinter,desc,x1,y1)
-    } else if (slope == -1){
-        return formEquation("-", yinter,desc,x1,y1)
+    //form equations based on y intercept conditions
+    if (yinter < 0){
+        yinter = " - " + Math.sqrt(yinter **2) 
+    } else if (yinter > 0) {
+        yinter = " + " + yinter
     } else {
-        return formEquation(slope, yinter,desc,x1,y1)
+        yinter = ""
     }
-
-}
-function formEquation(slope,yinter,desc,x1,y1) {
-    // y is a constant
-    if (desc == "horizontal") {
-        return "y = " + y1
-    // x is a constant
-    } else if (desc == "vertical") {
-        return "x = " + x1
-    //equation cannot be determined
-    } else if (desc == "cannot determine"){
-        return desc
-    // regular equation
-    }else {
-        //y inter is 0
-        if ( yinter == 0) {
-            return "y = " + slope +"x"
-        //y inter is pos
-        }else if (Math.sqrt(yinter **2) == yinter){
-            return "y = " + slope +"x + " + yinter
-        //y inter is neg
-        } else {
-            return "y = " + slope +"x - " + Math.sqrt(yinter **2)
+     //form equations based on slope conditions (dont want a 1 as a coefficient)
+    if (slope == -1) {
+        slope = "-"
+    } else if (slope == 1) {
+        slope = ""
+    }
+    let desc = getDescription(x1,y1,x2,y2)
+        // y is a constant
+        if (desc == "horizontal") {
+            return "y = " + y1
+        // x is a constant
+        } else if (desc == "vertical") {
+            return "x = " + x1
+        //equation cannot be determined
+        } else if (desc == "cannot determine"){
+            return desc
+        // regular equation
+        }else {
+            return "y = " + slope +"x" + yinter
         }
-    }
 }
